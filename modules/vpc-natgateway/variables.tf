@@ -27,3 +27,7 @@ variable "aws_subnet_public_2" {
   description = "cidr block for subnet public 1"
 }
 
+variable "enable_nat_gateway" {
+  type = bool
+  default = false
+}
