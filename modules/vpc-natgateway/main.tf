@@ -1,13 +1,13 @@
 locals {
   vpc_namespace = "VPC_${var.name_vpc}"
-    enable_dns_support   = true
-  enable_dns_hostnames = true
 }
 
 ############################# create VPC
 resource "aws_vpc" "main" {
   cidr_block = var.cidr_vpc
-  
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
   tags = {
     Name = "VPC_${var.name_vpc}"
    }
@@ -77,6 +77,7 @@ resource "aws_route_table_association" "route_table_private_association_2" {
 resource "aws_subnet" "private_subnet_1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.aws_subnet_private_1
+  availability_zone = "us-east-1a"
 
   tags = {
     Name = "PRIVATE_SUBNET_1_${local.vpc_namespace}"
@@ -86,7 +87,7 @@ resource "aws_subnet" "private_subnet_1" {
 resource "aws_subnet" "private_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.aws_subnet_private_2
-
+  availability_zone = "us-east-1b"
   tags = {
     Name = "PRIVATE_SUBNET_2_${local.vpc_namespace}"
   }
@@ -96,7 +97,7 @@ resource "aws_subnet" "public_subnet_1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.aws_subnet_public_1
   map_public_ip_on_launch = true
-
+  availability_zone = "us-east-1a"
   tags = {
     Name = "PUBLIC_SUBNET_1_${local.vpc_namespace}"
   }
@@ -106,7 +107,7 @@ resource "aws_subnet" "public_subnet_2" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.aws_subnet_public_2
   map_public_ip_on_launch = true
-
+  availability_zone = "us-east-1b"
   tags = {
     Name = "PUBLIC_SUBNET_2_${local.vpc_namespace}"
   }
