@@ -16,7 +16,6 @@ pasos para usar los módulos:
 > project
 
 3. llamar el módulo de vpn-natgateway
-4. crear los archivos tf necesarios.
 
 ```tf
 module "vpc_test" {
@@ -24,3 +23,5 @@ module "vpc_test" {
   enable_nat_gateway = true
 }
 ```
+
+4. crear los archivos tf necesarios.
