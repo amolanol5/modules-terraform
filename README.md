@@ -6,7 +6,7 @@ Modulos útlies para ambientes de desarrollo y probar funcionalidades.
 
 pasos para usar los módulos: 
 
-### vpn-natgateway
+### vpn-natgateway:
 
 1. Descargar el repositorio
 2. crear una carpeta llamada project
