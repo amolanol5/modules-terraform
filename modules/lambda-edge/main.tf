@@ -18,7 +18,6 @@ data "aws_iam_policy_document" "logging_for_lambda" {
   }
 }
 
-
 data "aws_iam_policy_document" "edge_permissions" {
   statement {
     effect = "Allow"
@@ -29,9 +28,10 @@ data "aws_iam_policy_document" "edge_permissions" {
       "iam:CreateServiceLinkedRole"
     ]
 
-    resources = ["*"]
+    resources = ["${aws_lambda_function.main.arn}"]
   }
 }
+
 
 # Enables CloudWatch logs
 resource "aws_iam_role_policy" "logging_for_lambda" {
@@ -49,13 +49,13 @@ resource "aws_iam_role_policy" "edge_permissions" {
   policy = data.aws_iam_policy_document.edge_permissions.json
 }
 
-
 resource "aws_s3_bucket_object" "hello_world_package" {
   bucket = var.s3_bucket
   key    = local.lambda_key
   source = "${path.module}/src/hello-world.zip"
   etag   = filemd5("${path.module}/src/hello-world.zip")
 }
+
 
 resource "aws_lambda_function" "main" {
   function_name = "${var.namespace}-${var.function_name}"
@@ -68,6 +68,7 @@ resource "aws_lambda_function" "main" {
   timeout       = var.lambda_timeout
   layers        = var.lambda_layers
   publish       = true
+
 
 
   depends_on = [aws_s3_bucket_object.hello_world_package]
@@ -96,6 +97,26 @@ resource "aws_lambda_function" "main" {
 # }
 
 
+# # ------------execution role
+# resource "aws_iam_role" "iam_for_lambda_edge" {
+#   name = "${local.environment}-lambda-edge-assume-policy-role"
+
+#   assume_role_policy = <<EOF
+# {
+#   "Version": "2012-10-17",
+#   "Statement": [
+#     {
+#       "Action": "sts:AssumeRole",
+#       "Principal": {
+#         "Service": ["lambda.amazonaws.com", "edgelambda.amazonaws.com"]
+#       },
+#       "Effect": "Allow",
+#       "Sid": "exectionRole"
+#     }
+#   ]
+# }
+# EOF
+# }
 
 
 
