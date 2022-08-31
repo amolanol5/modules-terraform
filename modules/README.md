@@ -10,11 +10,6 @@ pasos para usar los módulos:
 
 1. Descargar el repositorio
 2. crear una carpeta llamada project
-
-> modules
-
-> project
-
 3. llamar el módulo de vpn-natgateway
 
 ```tf
