@@ -1,5 +1,5 @@
 # Módulos Terraform
-Modulos útlies para ambientes de desarrollo y probar funcionalidades.
+Modulos útiles para ambientes de desarrollo y probar funcionalidades.
 
 - vpn-natgateway
 - lambda-edge
